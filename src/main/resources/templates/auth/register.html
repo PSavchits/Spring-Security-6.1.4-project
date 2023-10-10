@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Form</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h2>Registration Form</h2>
+<form action="/api/v1/auth/register" id="registrationForm">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+    <label for="firstname">First Name:</label>
+    <input type="text" id="firstname" name="firstname" required>
+    <br>
+    <label for="lastname">Last Name:</label>
+    <input type="text" id="lastname" name="lastname" required>
+    <br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <input type="submit" value="Register">
+</form>
+
+<script>
+    $(document).ready(function() {
+        $('#registrationForm').submit(function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            var formData = {
+                firstname: $('#firstname').val(),
+                lastname: $('#lastname').val(),
+                email: $('#email').val(),
+                password: $('#password').val()
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/v1/auth/register',
+                data: JSON.stringify(formData),
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response);
+                    // Handle successful registration
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                    // Handle errors
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
