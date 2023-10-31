@@ -11,4 +11,9 @@ public class WebController {
     public String showRegistrationPage() {
         return "auth/register";
     }
+
+   @GetMapping("/login")
+    public String showLoginPage() {
+        return "auth/login";
+    }
 }
